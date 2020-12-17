@@ -1,15 +1,24 @@
 <template>
   <div class="login-container">
     <!-- 导航栏 -->
-    <van-nav-bar class="page-nav-bar" title="登录"/>
+    <van-nav-bar
+    class="page-nav-bar"
+    title="登录">
+      <van-icon
+      slot="left"
+      name="cross"
+      @click="$router.back()" />
+    </van-nav-bar>
 
     <!-- 登录表单 -->
-    <van-form @submit="onSubmit">
+    <van-form ref="loginForm" @submit="onSubmit">
       <van-field
         v-model="user.mobile"
         name="mobile"
         placeholder="请输入手机号"
         :rules="userFormRules.mobile"
+        type="number"
+        maxlength="11"
       >
       <i slot="left-icon" class="toutiao toutiao-shouji"></i>
       </van-field>
@@ -18,6 +27,8 @@
         name="code"
         placeholder="请输入验证码"
         :rules="userFormRules.code"
+        type="number"
+        maxlength="6"
       >
       <i slot="left-icon" class="toutiao toutiao-yanzhengma"></i>
       <template #button>
@@ -28,7 +39,14 @@
         format = 'ss s'
         @finish="isCountDownShow = false"
         />
-        <van-button v-else class="send-sms-btn" native-type="button" size="small" type="default" round @click="onSendSms">发送验证码</van-button>
+        <van-button
+        v-else
+        class="send-sms-btn"
+        native-type="button"
+        size="small"
+        type="default"
+        round
+        @click="onSendSms">发送验证码</van-button>
       </template>
       </van-field>
       <div class="login-btn-wrap">
@@ -55,9 +73,7 @@ export default {
       userFormRules: {
         mobile: [{
           required: true,
-          message: '手机号不能为空',
-          type: 'number',
-          maxlength: '11'
+          message: '手机号不能为空'
         }, {
           pattern: /^1[3|5|7|8]\d{9}$/,
           message: '手机号格式错误'
@@ -67,9 +83,7 @@ export default {
           message: '验证码不能为空'
         }, {
           pattern: /^\d{6}$/,
-          message: '验证码格式错误',
-          type: 'number',
-          maxlength: '6'
+          message: '验证码格式错误'
         }]
       },
       // 点击按钮的显示与隐藏
@@ -94,11 +108,12 @@ export default {
       })
       // 3.提交表单请求登录
       try {
-        const data = await login(user)
+        const { data } = await login(user)
         // console.log('登录成功', res)
         // 提示 success 或者 fail 的时候，会先把其他的 totast 先清除
         this.$store.commit('setUser', data.data)
         this.$toast.success('登录成功')
+        this.$router.back()
       } catch (err) {
         if (err.response.status === 400) {
           // console.log('登录验证码或密码有误', err)
@@ -145,7 +160,7 @@ export default {
   }
 
   .send-sms-btn {
-    width: 156px;
+    width: 176px;
     height: 46px;
     line-height: 46px;
     background-color: #ededed;

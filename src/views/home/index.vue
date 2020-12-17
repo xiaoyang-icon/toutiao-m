@@ -1,10 +1,9 @@
 <template>
   <div class="home-container">
-    <!-- 子路由的出口 -->
-  <router-view />
-
-  <!-- 标签导航栏 -->
-  <!-- 开启路由模式 -->
+    <!-- 导航栏 -->
+    <van-nav-bar title="标题">
+      <van-button type="primary">主要按钮</van-button>
+    </van-nav-bar>
   </div>
 </template>
 
