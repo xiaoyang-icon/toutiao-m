@@ -1,10 +1,10 @@
 <template>
-  <div class="qa-container">问答</div>
+  <div class="channel-edit">频道编辑组件</div>
 </template>
 
 <script>
 export default {
-  name: 'QaIndex',
+  name: 'ChannelEdit',
   components: {},
   props: {},
   data () {

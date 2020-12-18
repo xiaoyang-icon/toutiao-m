@@ -1,7 +1,9 @@
-// 用户相关的请求
-import request from '../utils/request'
+/**
+ * 用户相关请求模块
+ */
+import request from '@/utils/request'
 // import store from '@/store'
-// 用户登录
+
 export const login = data => {
   return request({
     method: 'POST',
@@ -10,7 +12,10 @@ export const login = data => {
   })
 }
 
-// 发送验证码  注意：每个手机号每分钟1次
+/**
+ * 发送验证码
+ * 注意：每手机号每分钟1次
+ */
 export const sendSms = mobile => {
   return request({
     method: 'GET',
@@ -18,7 +23,9 @@ export const sendSms = mobile => {
   })
 }
 
-// 获取用户自己的信息
+/**
+ * 获取用户自己的信息
+ */
 export const getUserInfo = () => {
   return request({
     method: 'GET',
@@ -29,5 +36,15 @@ export const getUserInfo = () => {
     //   //       token的数据格式：Bearer token数据，注意 Bearer 后面有个空格
     //   Authorization: `Bearer ${store.state.user.token}`
     // }
+  })
+}
+
+/**
+ * 获取用户频道列表
+ */
+export const getUserChannels = () => {
+  return request({
+    method: 'GET',
+    url: '/app/v1_0/user/channels'
   })
 }
